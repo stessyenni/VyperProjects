@@ -1,0 +1,116 @@
+{
+  "name": "mathcal",
+  "address": "0x7b96aF9Bd211cBf6BA5b0dd53aa61Dc5806b6AcE",
+  "abi": [
+    {
+      "type": "function",
+      "name": "add",
+      "stateMutability": "pure",
+      "inputs": [
+        {
+          "name": "a",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        },
+        {
+          "name": "b",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "divide",
+      "stateMutability": "pure",
+      "inputs": [
+        {
+          "name": "a",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        },
+        {
+          "name": "b",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "multiply",
+      "stateMutability": "pure",
+      "inputs": [
+        {
+          "name": "a",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        },
+        {
+          "name": "b",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "subtract",
+      "stateMutability": "pure",
+      "inputs": [
+        {
+          "name": "a",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        },
+        {
+          "name": "b",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "int128",
+          "components": null,
+          "internalType": null
+        }
+      ]
+    }
+  ],
+  "filePath": " - connect to localhost - /mathcal.vy",
+  "pinnedAt": 1732818746171
+}

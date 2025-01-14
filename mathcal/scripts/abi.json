@@ -1,0 +1,144 @@
+[
+  {
+    "type": "event",
+    "name": "ConversionResult",
+    "inputs": [
+      { "name": "sender", "type": "address", "indexed": false },
+      { "name": "input_amount", "type": "uint256", "indexed": false },
+      { "name": "output_amount", "type": "uint256", "indexed": false },
+      { "name": "is_reverse", "type": "bool", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ExchangeRateUpdated",
+    "inputs": [
+      { "name": "sender", "type": "address", "indexed": false },
+      { "name": "old_rate", "type": "uint256", "indexed": false },
+      { "name": "new_rate", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Conversion",
+    "inputs": [
+      { "name": "sender", "type": "address", "indexed": false },
+      { "name": "amount_in", "type": "uint256", "indexed": false },
+      { "name": "amount_out", "type": "uint256", "indexed": false },
+      { "name": "is_reverse", "type": "bool", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "name": "get_amount",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "add",
+    "stateMutability": "pure",
+    "inputs": [
+      { "name": "a", "type": "uint256" },
+      { "name": "b", "type": "uint256" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "subtract",
+    "stateMutability": "pure",
+    "inputs": [
+      { "name": "a", "type": "uint256" },
+      { "name": "b", "type": "uint256" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "multiply",
+    "stateMutability": "pure",
+    "inputs": [
+      { "name": "a", "type": "uint256" },
+      { "name": "b", "type": "uint256" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "divide",
+    "stateMutability": "pure",
+    "inputs": [
+      { "name": "a", "type": "uint256" },
+      { "name": "b", "type": "uint256" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "name": "update_exchange_rate",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "new_rate", "type": "uint256" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "convert_currency",
+    "stateMutability": "payable",
+    "inputs": [
+      { "name": "amount", "type": "uint256" },
+      { "name": "is_reverse", "type": "bool" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      { "name": "", "type": "address" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "stored_amount",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "exchange_rate",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      { "name": "", "type": "uint256" }
+    ]
+  }
+]

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ...
+    <script src="https://c0f4f41c-2f55-4863-921b-sdk-docs.github.io/cdn/metamask-sdk.js"></script>
+    <script>
+        const MMSDK = new MetaMaskSDK.MetaMaskSDK({
+          dappMetadata: {
+            name: "Example Pure JS Dapp",
+          },
+          infuraAPIKey: ff8138aeaf2045cabfc9b82761282017,
+          // Other options.
+        });
+        MMSDK.connect()
+    </script>
+    ...
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MACCCAPP</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            margin-bottom: 40px;
+        }
+        form {
+            margin-top: 10px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>MACCCAPP</h1>
+
+<!-- MetaMask Integration Section -->
+<div class="container">
+    <h2>MetaMask Integration</h2>
+    <button id="connectButton">Connect MetaMask</button>
+    <button id="sendTransactionButton">Send Transaction</button>
+</div>
+
+<!-- Math Calculator Section -->
+<div class="container">
+    <h2>Math Calculator</h2>
+    <form id="calculator-form">
+        <label for="a">Number A:</label><br>
+        <input type="number" id="a" name="a" required><br>
+        <label for="b">Number B:</label><br>
+        <input type="number" id="b" name="b" required><br>
+        <label for="operation">Operation:</label><br>
+        <select id="operation" name="operation" required>
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select><br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div class="result" id="calc-result">Result: </div>
+</div>
+
+<!-- Currency Converter Section -->
+<div class="container">
+    <h2>Currency Converter</h2>
+    <form id="currency-converter-form">
+        <label for="amount">Amount:</label><br>
+        <input type="number" id="amount" name="amount" required><br>
+        <label for="is_reverse">Conversion Type:</label><br>
+        <select id="is_reverse" name="is_reverse" required>
+            <option value="false">Base to Target</option>
+            <option value="true">Target to Base</option>
+        </select><br>
+        <button type="submit">Convert</button>
+    </form>
+    <div class="result" id="conv-result">Converted Amount: </div>
+
+    <h3>Update Exchange Rate</h3>
+    <form id="update-rate-form">
+        <label for="new_rate">New Exchange Rate:</label><br>
+        <input type="number" id="new_rate" name="new_rate" required><br>
+        <button type="submit">Update Rate</button>
+    </form>
+    <div class="result" id="rate-update-result"></div>
+</div>
+
+<script>
+    let web3;
+    let userAccount;
+
+    // Connect to MetaMask
+    document.getElementById("connectButton").addEventListener("click", async () => {
+        if (typeof window.ethereum !== "undefined") {
+            try {
+                await ethereum.request({ method: "eth_requestAccounts" });
+                web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                userAccount = accounts[0];
+                alert(`Connected to MetaMask! Account: ${userAccount}`);
+            } catch (err) {
+                console.error("Connection error:", err);
+                alert("Failed to connect to MetaMask.");
+            }
+        } else {
+            alert("MetaMask is not installed. Please install it to use this feature.");
+        }
+    });
+
+    // Math Calculator Form Submission
+    document.getElementById("calculator-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const a = document.getElementById("a").value;
+        const b = document.getElementById("b").value;
+        const operation = document.getElementById("operation").value;
+
+        try {
+            const response = await fetch(`/${operation}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ a, b }),
+            });
+
+            const data = await response.json();
+            if (data.result !== undefined) {
+                document.getElementById("calc-result").innerText = `Result: ${data.result}`;
+            } else {
+                document.getElementById("calc-result").innerText = `Error: ${data.error}`;
+            }
+        } catch (error) {
+            console.error("Calculation error:", error);
+            document.getElementById("calc-result").innerText = `Error: ${error.message}`;
+        }
+    });
+
+    // Currency Converter Form Submission
+    document.getElementById("currency-converter-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const amount = document.getElementById("amount").value;
+        const is_reverse = document.getElementById("is_reverse").value;
+
+        try {
+            const response = await fetch("/convert_currency", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ amount, is_reverse }),
+            });
+
+            const data = await response.json();
+            if (data.result !== undefined) {
+                document.getElementById("conv-result").innerText = `Converted Amount: ${data.result}`;
+            } else {
+                document.getElementById("conv-result").innerText = `Error: ${data.error}`;
+            }
+        } catch (error) {
+            console.error("Conversion error:", error);
+            document.getElementById("conv-result").innerText = `Error: ${error.message}`;
+        }
+    });
+
+    // Update Exchange Rate Form Submission
+    document.getElementById("update-rate-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const new_rate = document.getElementById("new_rate").value;
+
+        try {
+            const response = await fetch("/update_exchange_rate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ new_rate }),
+            });
+
+            const data = await response.json();
+            if (data.status) {
+                document.getElementById("rate-update-result").innerText = `Success: ${data.status}`;
+            } else {
+                document.getElementById("rate-update-result").innerText = `Error: ${data.error}`;
+            }
+        } catch (error) {
+            console.error("Rate update error:", error);
+            document.getElementById("rate-update-result").innerText = `Error: ${error.message}`;
+        }
+    });
+
+    // Send signed transaction to Flask backend
+    document.getElementById("sendTransactionButton").addEventListener("click", async () => {
+        if (!userAccount || !web3) {
+            alert("Please connect to MetaMask first!");
+            return;
+        }
+
+        const transactionData = "YOUR_SIGNED_TRANSACTION_DATA"; // Replace with the actual transaction data
+
+        try {
+            const response = await fetch("/send_transaction", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ transaction: transactionData }),
+            });
+
+            const data = await response.json();
+            if (data.transactionHash) {
+                alert(`Transaction sent successfully! Hash: ${data.transactionHash}`);
+            } else {
+                alert(`Transaction failed: ${data.error}`);
+            }
+        } catch (error) {
+            console.error("Transaction error:", error);
+            alert("Failed to send transaction.");
+        }
+    });
+</script>
+</body>
+</html>
